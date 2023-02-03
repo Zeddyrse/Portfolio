@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+{% include "partials/_navbar.html.twig" %} 
+
+    <div class="container">
+    {{ form_start(form) }}
+
+        <h1 class="mt-5 mb-5 text-center">Modification d'un projet</h1>
+
+        <div class="form-group">
+            <div class=" d-flex justify-content-center">
+                {{ form_label(form.name) }}
+            </div>
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="form-group">
+            <div class=" d-flex justify-content-center">
+                {{ form_label(form.technology) }}
+            </div>
+            {{ form_widget(form.technology) }}
+        </div>
+         <div class="form-group">
+            <div class=" d-flex justify-content-center">
+                {{ form_label(form.description) }}
+            </div>
+            {{ form_widget(form.description) }}
+        </div>
+         <div class="form-group">
+            <div class=" d-flex justify-content-center">
+                {{ form_label(form.startedAt) }}
+            </div>
+            {{ form_widget(form.startedAt) }}
+        </div>
+        <div class="form-group">
+            <div class=" d-flex justify-content-center">
+                {{ form_label(form.endedAt) }}
+            </div>
+            {{ form_widget(form.endedAt) }}
+        </div>
+        <div class="form-group">
+            <div class=" d-flex justify-content-center">
+                {{ form_label(form.imageFile) }}
+            </div>
+            {{ form_widget(form.imageFile) }}
+        </div>
+        <div class="form-group ">
+            <div class=" d-flex justify-content-center">
+                {{ form_label(form.link) }}
+            </div>
+            {{ form_widget(form.link) }}
+        </div>
+        <div class="form-group d-flex justify-content-center">
+            {{ form_row(form.save) }}
+        </div>
+    {{ form_end(form) }}
+        <a  href="{{ path ('project.delete', {id:project.id} ) }}" class="btn btn-info">Suppresion</a>
+    </div>
+
+{% endblock %}

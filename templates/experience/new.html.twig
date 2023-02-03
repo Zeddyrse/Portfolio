@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout de formations{% endblock %}
+
+{% block body %}
+{% include "partials/_navbar.html.twig" %} 
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+{{ form_end(form) }}
+
+{% endblock %}
