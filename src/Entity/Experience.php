@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ReferenceRepository;
+use App\Repository\ExperienceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ReferenceRepository::class)]
+#[ORM\Entity(repositoryClass: ExperienceRepository::class)]
 class Experience
 {
     #[ORM\Id]
@@ -30,17 +30,6 @@ class Experience
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $endedAt = null;
-
-    #[ORM\ManyToOne(inversedBy: 'reference')]
-    private ?User $user = null;
-
-    #[ORM\OneToMany(mappedBy: 'experience', targetEntity: Skill::class)]
-    private Collection $skill;
-
-    public function __construct()
-    {
-        $this->skill = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -103,48 +92,6 @@ class Experience
     public function setEndedAt(\DateTimeInterface $endedAt): self
     {
         $this->endedAt = $endedAt;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Skill>
-     */
-    public function getSkill(): Collection
-    {
-        return $this->skill;
-    }
-
-    public function addSkill(Skill $skill): self
-    {
-        if (!$this->skill->contains($skill)) {
-            $this->skill->add($skill);
-            $skill->setExperience($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(Skill $skill): self
-    {
-        if ($this->skill->removeElement($skill)) {
-            // set the owning side to null (unless already changed)
-            if ($skill->getExperience() === $this) {
-                $skill->setExperience(null);
-            }
-        }
 
         return $this;
     }

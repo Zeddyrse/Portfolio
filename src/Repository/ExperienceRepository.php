@@ -9,10 +9,10 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Experience>
  *
- * @method Reference|null find($id, $lockMode = null, $lockVersion = null)
- * @method Reference|null findOneBy(array $criteria, array $orderBy = null)
- * @method Reference[]    findAll()
- * @method Reference[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Experience|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Experience|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Experience[]    findAll()
+ * @method Experience[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ExperienceRepository extends ServiceEntityRepository
 {

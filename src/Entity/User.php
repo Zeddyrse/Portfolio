@@ -2,18 +2,16 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use App\EntityListener\UserListener;
 use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping\EntityListeners;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[UniqueEntity('email')]
-#[EntityListeners(['App\EntityListener\UserListener'])]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\EntityListeners([UserListener::class])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -31,21 +29,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    private ?string $password;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Formation::class)]
-    private Collection $formation;
+    #[ORM\Column(length: 255)]
+    private ?string $firstname = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Experience::class)]
-    private Collection $experience;
+    #[ORM\Column(length: 255)]
+    private ?string $lastname = null;
 
     private ?string $plainPassword = null;
-
-    public function __construct()
-    {
-        $this->formation = new ArrayCollection();
-        $this->experience = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -108,21 +100,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPlainPassword(): ?string
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * Set the value of plainPassword
-     */
-    public function setPlainPassword(string $plainPassword): self
-    {
-        $this->plainPassword = $plainPassword;
-
-        return $this;
-    }
-
     /**
      * @see UserInterface
      */
@@ -132,63 +109,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, Formation>
-     */
-    public function getFormation(): Collection
+    public function getFirstname(): ?string
     {
-        return $this->formation;
+        return $this->firstname;
     }
 
-    public function addFormation(Formation $formation): self
+    public function setFirstname(string $firstname): self
     {
-        if (!$this->formation->contains($formation)) {
-            $this->formation->add($formation);
-            $formation->setUser($this);
-        }
+        $this->firstname = $firstname;
 
         return $this;
     }
 
-    public function removeFormation(Formation $formation): self
+    public function getLastname(): ?string
     {
-        if ($this->formation->removeElement($formation)) {
-            // set the owning side to null (unless already changed)
-            if ($formation->getUser() === $this) {
-                $formation->setUser(null);
-            }
-        }
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Experience>
-     */
-    public function getExperience(): Collection
+    public function getPlainPassword(): ?string
     {
-        return $this->experience;
+        return $this->plainPassword;
     }
 
-    public function addReference(Experience $experience): self
+    public function setPlainPassword(?string $plainPassword): self
     {
-        if (!$this->experience->contains($experience)) {
-            $this->experience->add($experience);
-            $experience->setUser($this);
-        }
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
 
-    public function removeReference(Experience $experience): self
-    {
-        if ($this->experience->removeElement($experience)) {
-            // set the owning side to null (unless already changed)
-            if ($experience->getUser() === $this) {
-                $experience->setUser(null);
-            }
-        }
 
-        return $this;
-    }
 }
