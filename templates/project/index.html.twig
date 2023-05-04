@@ -4,12 +4,11 @@
 
 {% block body %}
 {% include "partials/_navbar.html.twig" %} 
-
- <div class="container">
-    <div class="row justify-content-center">
+    
+ <div class="container ">
+    <div class="row d-flex justify-content-around">
     {% for project in projects %}
-
-    <div class="col-5 card mb-3 mr-3 pr-3" style="max-width: 500px;">
+    <div class="col-5 card mt-5 mb-3 " style="max-width: 500px;">
     <div class="row g-0 text-center">
         <div class="col-md-3">
         <img src="{{asset(project.imageName) }}" class="img-fluid rounded-start" alt="...">
@@ -18,17 +17,18 @@
         <div class="card-body m-0">
             <h5 class="card-title">{{project.name}}</h5>
             <h6 class="card-title">{{project.technology}}</h6>
-            <h7 class="card-title">{{project.link}}</h7>
+            <h7 class="card-title ">{{project.link | u.truncate(10)}}</h7>
             <p class="card-text">{{project.description}}</p>
             <p class="card-text"><small class="text-muted">Début du projet le : {{project.startedAt | date('d/m/Y')}}</small> </p>
             <p class="card-text"><small class="text-muted">Fin du projet le : {{project.endedAt | date('d/m/Y')}}</small></p>
         </div>
         </div>
-                <a  href="{{ path('projet_delete', { id: project.id }) }}" class="btn btn-info">Suppresion</a>
+            <div>
+                <a  href="{{ path('projet_edit', { id: project.id }) }}" class="btn btn-dark ">Edition</a>
+                <a  href="{{ path('projet_delete', { id: project.id }) }}" class="btn btn-dark ">Suppresion</a>
+            </div>
     </div>
     </div> 
-
-   
     {% endfor %}
     </div>
 </div>

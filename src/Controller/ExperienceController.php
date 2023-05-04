@@ -19,7 +19,7 @@ class ExperienceController extends AbstractController
         $experiences = $experienceRepository->findAll();
 
         return $this->render('experience/index.html.twig', [
-            'controller_name' => 'ExperienceController',
+            // 'controller_name' => 'ExperienceController',
             'experiences' => $experiences,
         ]);
     }
