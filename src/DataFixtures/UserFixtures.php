@@ -18,9 +18,16 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setFirstname($faker->firstName());
             $user->setLastname($faker->lastName());
+            $user->setPlainPassword('password');
+            if(!$i)
+            {
+                $user->setEmail('admin@admin');
+                $user->setRoles(['ROLE_ADMIN']);
+            }
+            else{
             $user->setEmail($faker->email());
             $user->setRoles(['ROLE_USER']);
-            $user->setPlainPassword('password');
+            }
             // $user->setPassword($this->hasher->hashPassword($user, 'password'));
             // $hasherPassword = $this->hasher->hashPassword($user, 'password');
             //$user->setPassword($hasherPassword);
